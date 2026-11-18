@@ -2,7 +2,24 @@
 
 AI 多角色求职反诈模拟训练系统。用户在同一聊天界面中分别与林悦、陈浩和王宇交流，通过提问、核实与决策练习识别招聘风险，并获得有行为证据的复盘报告。
 
-当前处于 **P0 文档评审阶段**。资料已整理，事件与评分规则尚未冻结，**不具备进入 P1 的条件**；未启动 P1–P5、业务开发或部署。
+## 本机演示
+
+用 Python 3.12、uv 和 Node.js 22.12+，在仓库根目录分别打开两个终端。
+
+```sh
+cd backend
+uv sync --locked --python 3.12
+uv run alembic upgrade head
+uv run uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+```sh
+cd frontend
+npm ci
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
+```
+
+打开 <http://127.0.0.1:5173>，确认使用虚构资料并点击“开始训练”。验收时逐一切换三位联系人，应能读到各自的开场。刷新同一标签页，应恢复这次训练。后端验收运行 `cd backend && uv run pytest`，前端构建运行 `cd frontend && npm run build`。
 
 ## 设计文档
 
@@ -35,6 +52,4 @@ AI 多角色求职反诈模拟训练系统。用户在同一聊天界面中分�
 
 负责人下一步评审方案 B 的事件与分支、线索披露条件、九项资料及评分档位。原 P0 盘点中的 Q01 已由方案 B 取代，其余问题可查原评审记录。[MVP 业务规则 v0.1](docs/scenario/mvp-business-rules.md) · [P0 盘点](docs/scenario/p0-inventory.md)
 
-P0 通过后，再另行进入 P1–P4 的数据结构和契约阶段。服务器规格、域名、证书、模型服务和 Qoder Sites 实际发布配置继续保留 TODO。
-
-本文档交付不包含业务代码、依赖安装或部署；功能测试与部署验收尚未执行。比赛公开应用地址：**TODO，完成实际部署验收后填写**。
+正式发布所需的域名、证书、模型服务和 Qoder Sites 配置待确认。比赛公开应用地址待部署验收后填写。
